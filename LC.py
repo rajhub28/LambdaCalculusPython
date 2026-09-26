@@ -27,19 +27,17 @@ succ = lambda n: lambda f: lambda x: (f(n(f)(x)))
 plus = lambda m: lambda n: lambda f: lambda x: m(f)((n(f)(x)))
 mult = lambda m: lambda n: lambda f: lambda x: m(n(f))(x)
 pred = lambda n: lambda f: lambda x: (n(lambda g: lambda h: h(g(f)))(lambda u: x))(lambda u: u)
-#sub = lambda m: lambda n: (n(lambda n: lambda f: lambda x: ((n(lambda g: lambda h: h(g(f))))(lambda u: x))(lambda u: u)))(m)
 sub = lambda m: lambda n: n(pred)(m)
-pow  = lambda b: lambda e: e(b)
+poww  = lambda b: lambda e: e(b)
 
 displayNum = lambda n: n(lambda x: x + 1)(0)
 
 church = lambda n: (lambda f: lambda x: x) if n == 0 else (lambda f: lambda x: f(church(n - 1)(f)(x)))
 ############ IF-THEN-ELSE PREDICATES ######################
 ifthenelse = lambda p: lambda a: lambda b: p(a)(b)
-isZero = lambda n: n(lambda x: lambda x: lambda y: y)(lambda x: lambda y: x) 
+isZero = lambda n: n(lambda x: false)(true)
 # comparisons of Church numbers
 leq = lambda m: lambda n: isZero(sub(m)(n))
-#leq = lambda m: lambda n: (lambda n: n(lambda x: lambda x: lambda y: y)(lambda x: lambda y: x)) ((lambda m: lambda n: n(lambda n: lambda f: lambda x: n(lambda g: lambda h: h(g(f)))(lambda u: x)(lambda u: u))(m))(m)(n))
 eq = lambda m: lambda n: AND(leq(m)(n))(leq(n)(m))
 lt = lambda m: lambda n: AND(leq(m)(n))(NOT(eq(m)(n)))
 gt = lambda m: lambda n: NOT(leq(m)(n))
@@ -203,7 +201,7 @@ map_step = lambda f: lambda g: lambda xs: \
             (lambda _: cons(g(head(xs)))(f(g)(tail(xs)))) (zero)
 
 mapp = lambda g: lambda xs: ycomb(map_step)(g)(xs)
-# displayList(mapp(lambda x: pow(x)(church(2)))(mylist1))
+# displayList(mapp(lambda x: poww(x)(church(2)))(mylist1))
 # displayList(mapp(lambda x: mult(church(2))(x))(mylist1))
 ##########################################################################################
 
