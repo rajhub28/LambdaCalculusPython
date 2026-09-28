@@ -1,0 +1,17 @@
+ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
+>>> displayList(xs3)
+[22, 32, 12, 96, 112, 2, 86, 91, 19, 120, 812, 15, 11, 66, 55]
+>>> displayNum(sumlist(xs3))
+1551
+>>> displayNum(maxlist(xs3))
+812
+>>> displayList(doublelist(xs3))
+[22, 22, 32, 32, 12, 12, 96, 96, 112, 112, 2, 2, 86, 86, 91, 91, 19, 19, 120, 120, 812, 812, 15, 15, 11, 11, 66, 66, 55, 55]
+>>> displayNum(length(xs3))
+15
+>>> displayList(qsort(xs3))
+[2, 11, 12, 15, 19, 22, 32, 55, 66, 86, 91, 96, 112, 120, 812]
+>>> displayList(msort(xs3))
+[2, 11, 12, 15, 19, 22, 32, 55, 66, 86, 91, 96, 112, 120, 812]
+>>> exit()
+ASCSC1PP629W1:lambdaPy raj$ 
