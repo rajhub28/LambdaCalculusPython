@@ -3,7 +3,7 @@
 LC.py contains a list of lambda expressions in Python that implement Church's Lambda Calculus. The following are implemented:
 
 - Boolean type and operators
-- Number type (0, 1, ...) and operations on numnbers
+- Number type (0, 1, ...) and operations on numbers
 - Pair and List data structure and associated operators
 
 Some list functions implemented are:
