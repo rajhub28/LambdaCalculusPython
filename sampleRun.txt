@@ -25,5 +25,12 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 [1, 3, 5]
 >>> displayNum(foldr(plus)(zero)(mylist1))
 15
+>>> plusone = lambda n: plus(n)(one)
+>>> twice = lambda f: two(f)
+>>> thrice = lambda f: three(f)
+>>> displayNum(twice(thrice)(plusone)(zero))
+9
+>>> displayNum(thrice(twice)(plusone)(zero))
+8
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 
