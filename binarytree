@@ -1,0 +1,88 @@
+In Church encoding, data structures are represented by how they are consumed. Just as a list is represented by its fold operation (taking a function for cons and a base value for nil), a binary tree can be represented by its tree-fold operation.
+
+A binary tree is either:
+
+Empty / Leaf (leaf)
+
+Node with a value, a left subtree, and a right subtree (node)
+
+1. Data Structure Definitions
+A tree node accepts three handlers: a function for node branches, a handler for leafs, and then applies them recursively.
+
+Leaf: Accepts a node handler n and a leaf default l, and simply returns l.
+
+Node: Takes a value v, left subtree left, and right subtree right. When evaluated, it applies n to v, the evaluated left subtree, and the evaluated right subtree.
+
+# Tree Constructors
+leaf = lambda n: lambda l: l
+
+node = lambda v: lambda left: lambda right: \
+    lambda n: lambda l: n(v)(left(n)(l))(right(n)(l))
+
+2. Example: Building a Binary Tree
+Using the Church numerals from your setup script (one, two, three, etc.):
+
+
+# Construct subtrees
+t_left  = node(two)(leaf)(leaf)
+t_right = node(three)(leaf)(leaf)
+
+# Root node holding 'one'
+my_tree = node(one)(t_left)(t_right)
+
+Visualizing my_tree:
+
+    1
+   / \
+  2   3
+
+
+3. Tree Operations (Sum & Size)
+Because Church-encoded trees natively behave as their own fold functions, operations like calculating the sum or size of the tree are very concise.
+
+Summing all values in the tree
+
+Pass plus as the node combiner and zero for the leaves:
+
+# sum_tree(t) = t(plus_node)(zero)
+# where plus_node = lambda val: lambda left_sum: lambda right_sum: val + left_sum + right_sum
+
+sum_tree = lambda t: t(lambda v: lambda l_sum: lambda r_sum: plus(v)(plus(l_sum)(r_sum)))(zero)
+
+# Example output: 1 + 2 + 3 = 6
+displayNum(sum_tree(my_tree))  # Output: 6
+
+# sum_tree(t) = t(plus_node)(zero)
+# where plus_node = lambda val: lambda left_sum: lambda right_sum: val + left_sum + right_sum
+
+
+Counting the number of nodes
+
+# Size adds 1 for each node encountered
+size_tree = lambda t: t(lambda v: lambda l_size: lambda r_size: plus(one)(plus(l_size)(r_size)))(zero)
+
+# Example output: 3
+displayNum(size_tree(my_tree)) # Output: 3
+
+
+# Constructors
+leaf = lambda n: lambda l: l
+node = lambda v: lambda left: lambda right: lambda n: lambda l: n(v)(left(n)(l))(right(n)(l))
+
+# Build a Tree of Church Numerals:
+#       4
+#      / \
+#     2   5
+#    /
+#   1
+tree1 = node(one)(leaf)(leaf)
+tree2 = node(two)(tree1)(leaf)
+tree5 = node(five)(leaf)(leaf)
+my_tree = node(four)(tree2)(tree5)
+
+# Tree Sum
+sum_tree = lambda t: t(lambda v: lambda l: lambda r: plus(v)(plus(l)(r)))(zero)
+
+print(displayNum(sum_tree(my_tree)))  # Prints: 12 (4 + 2 + 1 + 5)
+
+

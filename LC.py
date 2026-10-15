@@ -204,4 +204,46 @@ mapp = lambda g: lambda xs: ycomb(map_step)(g)(xs)
 # displayList(mapp(lambda x: poww(x)(church(2)))(mylist1))
 # displayList(mapp(lambda x: mult(church(2))(x))(mylist1))
 ##########################################################################################
+# foldr :: (a -> b -> b) -> b -> [a] -> b
+# foldr f z []     = z
+# foldr f z (x:xs) = f x (foldr f z xs)
+foldr_step = lambda f: lambda g: lambda acc: lambda xs: \
+    isempty(xs)\
+      (lambda _: acc)\
+      (lambda _: g(head(xs))(f(g)(acc)(tail(xs)))) (zero)
+            
+foldr = lambda g: lambda acc: lambda xs: ycomb(foldr_step)(g)(acc)(xs)
+# displayList(mylist1)
+# displayNum(foldr(plus)(zero)(mylist1))
+##########################################################################################
+# foldl :: (b -> a -> b) -> b -> [a] -> b
+# foldl f z []     = z
+# foldl f z (x:xs) = foldl f (f z x) xs
+foldl_step = lambda f: lambda g: lambda acc: lambda xs: \
+    isempty(xs)\
+      (lambda _: acc)\
+      (lambda _: f(g)(g(acc)(head(xs)))(tail(xs))) (zero)
+            
+foldl = lambda g: lambda acc: lambda xs: ycomb(foldl_step)(g)(acc)(xs)
+##########################################################################################
+# Binary Tree of Numbers
+leaf = lambda n: lambda l: l
+node = lambda v: lambda left: lambda right: \
+    lambda n: lambda l: n(v)(left(n)(l))(right(n)(l))
 
+# Construct subtrees
+t_left  = node(two)(leaf)(leaf)
+t_right = node(three)(leaf)(leaf)
+
+# Root node holding 'one'
+my_tree1 = node(one)(t_left)(t_right)
+
+tree1 = node(one)(leaf)(leaf)
+tree2 = node(two)(tree1)(leaf)
+tree5 = node(five)(leaf)(leaf)
+my_tree2 = node(four)(tree2)(tree5)
+
+sum_tree = lambda t: t(lambda v: lambda l_sum: lambda r_sum: plus(v)(plus(l_sum)(r_sum)))(zero)
+size_tree = lambda t: t(lambda v: lambda l_size: lambda r_size: plus(one)(plus(l_size)(r_size)))(zero)
+
+##########################################################################################
