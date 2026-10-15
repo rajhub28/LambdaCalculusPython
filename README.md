@@ -11,7 +11,7 @@ Some list functions implemented are:
 - factorial of a number
 - sum a list of numbers
 - find the length of a list of numbers
-- return two consecutive copes of each element of a list
+- return two consecutive copies of each element of a list
 - find the largest number in a list of numbers
 - quicksort a list of numbers
 - mergesort a list of numbers
