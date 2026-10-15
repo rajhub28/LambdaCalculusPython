@@ -16,5 +16,12 @@ Some list functions implemented are:
 - quicksort a list of numbers
 - mergesort a list of numbers
 
+Higher order functions: 
+
+- map
+- filter
+- foldr
+- foldl
+
 Additional functions are being added as and when time permits!
 
