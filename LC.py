@@ -60,6 +60,13 @@ head = lambda p: p(lambda x: lambda y: x)
 tail = lambda p: p(lambda x: lambda y: y)
 nil = lambda x: lambda x: lambda y: x
 isempty = lambda l: l(lambda h: lambda t: lambda x: lambda y: y)
+
+last_step = lambda f: lambda xs: \
+    isempty(tail(xs)) \
+        (lambda _: head(xs)) \
+        (lambda _: f(tail(xs))) \
+    (zero)
+last = lambda xs: ycomb(last_step)(xs)
 ################# Y-COMBINATOR #############################
 fact = lambda f: lambda n: ifthenelse(isZero(n))(lambda _: one)(lambda _: mult(n)(f(pred(n))))(one)
 #fact = lambda f: lambda n: isZero(n)(lambda _: one)(lambda _: mult(n)(f(pred(n))))(zero)  # this also works

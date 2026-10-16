@@ -54,5 +54,13 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 [8, 10, 7, 6, 9]
 >>> displayBool(ordered(mylist3))
 'FALSE'
+>>> displayList(mylist1)
+[1, 2, 3, 4, 5]
+>>> displayNum(last(mylist1))
+5
+>>> displayList(mylist2)
+[4, 10, 3, 5, 9]
+>>> displayNum(last(mylist2))
+9
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 
