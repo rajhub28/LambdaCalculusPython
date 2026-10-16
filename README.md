@@ -16,6 +16,7 @@ Some list functions implemented are:
 - quicksort a list of numbers
 - mergesort a list of numbers
 - test if two lists of numbers are disjoint
+- test if a list of numbers is ordered (sorted)
 
 Higher order functions: 
 
