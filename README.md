@@ -15,6 +15,7 @@ Some list functions implemented are:
 - find the largest number in a list of numbers
 - quicksort a list of numbers
 - mergesort a list of numbers
+- test if two lists of numbers are disjoint
 
 Higher order functions: 
 
@@ -22,6 +23,7 @@ Higher order functions:
 - filter
 - foldr
 - foldl
+- twice, thrice
 
 Additional functions are being added as and when time permits!
 
