@@ -32,5 +32,15 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 9
 >>> displayNum(thrice(twice)(plusone)(zero))
 8
+>>> displayList(mylist1)
+[1, 2, 3, 4, 5]
+>>> displayList(mylist2)
+[4, 10, 3, 5, 9]
+>>> displayList(mylist3)
+[8, 10, 7, 6, 9]
+>>> displayBool(disjoint(mylist1)(mylist2))
+'FALSE'
+>>> displayBool(disjoint(mylist1)(mylist3))
+'TRUE'
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 

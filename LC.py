@@ -70,6 +70,7 @@ min = lambda x: lambda y: ifthenelse(leq)(x)(y)(x)(y)
 
 mylist1 = cons(one)(cons(two)(cons(three)(cons(four)(cons(five)(nil)))))    # mylist1 = [1,2,3,4,5]
 mylist2 = cons(four)(cons(ten)(cons(three)(cons(five)(cons(nine)(nil)))))   # mylist2 = [4,10,3,5,9]
+mylist3 = cons(eight)(cons(ten)(cons(seven)(cons(six)(cons(nine)(nil)))))   # mylist3 = [8,10,7,6,9]
 
 slist = lambda f: lambda x: ifthenelse(isempty(x))(lambda _: zero)(lambda _: plus(head(x))(f((tail(x)))))(zero)
 dlist = lambda f: lambda x: ifthenelse(isempty(x))(lambda _: nil)(lambda _: cons(head(x))(cons(head(x))(f(tail(x)))))(zero)
@@ -213,8 +214,7 @@ foldr_step = lambda f: lambda g: lambda acc: lambda xs: \
       (lambda _: g(head(xs))(f(g)(acc)(tail(xs)))) (zero)
             
 foldr = lambda g: lambda acc: lambda xs: ycomb(foldr_step)(g)(acc)(xs)
-# displayList(mylist1)
-# displayNum(foldr(plus)(zero)(mylist1))
+# displayList(mylist# displayNum(foldr(plus)(zero)(mylist1))
 ##########################################################################################
 # foldl :: (b -> a -> b) -> b -> [a] -> b
 # foldl f z []     = z
@@ -226,24 +226,42 @@ foldl_step = lambda f: lambda g: lambda acc: lambda xs: \
             
 foldl = lambda g: lambda acc: lambda xs: ycomb(foldl_step)(g)(acc)(xs)
 ##########################################################################################
-# Binary Tree of Numbers
-leaf = lambda n: lambda l: l
-node = lambda v: lambda left: lambda right: \
-    lambda n: lambda l: n(v)(left(n)(l))(right(n)(l))
+disjoint_step = lambda f: lambda xs: lambda ys: \
+    isempty(xs)\
+        (lambda _: true) \
+        (isempty(ys) \
+            (lambda _: true) \
+            (eq(head(xs))(head(ys)) \
+                (lambda _: false) \
+                (lt(head(xs))(head(ys)) \
+                 (lambda _: f(tail(xs))(ys)) \
+                 (lambda _: f(xs)(tail(ys))) \
+                ) \
+            ) \
+        ) (zero)
 
-# Construct subtrees
-t_left  = node(two)(leaf)(leaf)
-t_right = node(three)(leaf)(leaf)
-
-# Root node holding 'one'
-my_tree1 = node(one)(t_left)(t_right)
-
-tree1 = node(one)(leaf)(leaf)
-tree2 = node(two)(tree1)(leaf)
-tree5 = node(five)(leaf)(leaf)
-my_tree2 = node(four)(tree2)(tree5)
-
-sum_tree = lambda t: t(lambda v: lambda l_sum: lambda r_sum: plus(v)(plus(l_sum)(r_sum)))(zero)
-size_tree = lambda t: t(lambda v: lambda l_size: lambda r_size: plus(one)(plus(l_size)(r_size)))(zero)
-
+disjoint = lambda xs: lambda ys: ycomb(disjoint_step)(xs)(ys)
+# displayBool(disjoint(mylist1)(mylist2))
+# displayBool(disjoint(mylist1)(mylist3))
 ##########################################################################################
+# Binary Tree of Numbers
+#leaf = lambda n: lambda l: l
+#node = lambda v: lambda left: lambda right: \
+#    lambda n: lambda l: n(v)(left(n)(l))(right(n)(l))
+#
+## Construct subtrees
+#t_left  = node(two)(leaf)(leaf)
+#t_right = node(three)(leaf)(leaf)
+#
+## Root node holding 'one'
+#my_tree1 = node(one)(t_left)(t_right)
+#
+#tree1 = node(one)(leaf)(leaf)
+#tree2 = node(two)(tree1)(leaf)
+#tree5 = node(five)(leaf)(leaf)
+#my_tree2 = node(four)(tree2)(tree5)
+#
+#sum_tree = lambda t: t(lambda v: lambda l_sum: lambda r_sum: plus(v)(plus(l_sum)(r_sum)))(zero)
+#size_tree = lambda t: t(lambda v: lambda l_size: lambda r_size: plus(one)(plus(l_size)(r_size)))(zero)
+#
+###########################################################################################
