@@ -244,6 +244,23 @@ disjoint = lambda xs: lambda ys: ycomb(disjoint_step)(xs)(ys)
 # displayBool(disjoint(mylist1)(mylist2))
 # displayBool(disjoint(mylist1)(mylist3))
 ##########################################################################################
+ordered_step = lambda f: lambda xs: \
+    isempty(xs)\
+        (lambda _: true) \
+        (isempty(tail(xs)) \
+            (lambda _: true) \
+            (gt(head(xs))(head(tail(xs))) \
+                (lambda _: false) \
+                (lambda _: f(tail(xs))) \
+            ) \
+        ) (zero)
+
+ordered = lambda xs: ycomb(ordered_step)(xs)
+# displayBool(ordered(mylist1))
+# displayBool(ordered(mylist2))
+# displayBool(ordered(mylist3))
+##########################################################################################
+# Binary Tree of Numbers
 # Binary Tree of Numbers
 #leaf = lambda n: lambda l: l
 #node = lambda v: lambda left: lambda right: \

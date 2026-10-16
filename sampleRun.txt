@@ -42,5 +42,17 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 'FALSE'
 >>> displayBool(disjoint(mylist1)(mylist3))
 'TRUE'
+>>> displayList(mylist1)
+[1, 2, 3, 4, 5]
+>>> displayBool(ordered(mylist1))
+'TRUE'
+>>> displayList(mylist2)
+[4, 10, 3, 5, 9]
+>>> displayBool(ordered(mylist2))
+'FALSE'
+>>> displayList(mylist3)
+[8, 10, 7, 6, 9]
+>>> displayBool(ordered(mylist3))
+'FALSE'
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 
