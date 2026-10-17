@@ -29,8 +29,8 @@ succ = lambda n: lambda f: lambda x: (f(n(f)(x)))
 plus = lambda m: lambda n: lambda f: lambda x: m(f)((n(f)(x)))
 mult = lambda m: lambda n: lambda f: lambda x: m(n(f))(x)
 pred = lambda n: lambda f: lambda x: (n(lambda g: lambda h: h(g(f)))(lambda u: x))(lambda u: u)
-sub = lambda m: lambda n: n(pred)(m)
-poww  = lambda b: lambda e: e(b)
+sub  = lambda m: lambda n: n(pred)(m)
+poww = lambda b: lambda e: e(b)
 
 displayNum = lambda n: n(lambda x: x + 1)(0)
 
@@ -40,9 +40,9 @@ ifthenelse = lambda p: lambda a: lambda b: p(a)(b)
 isZero = lambda n: n(lambda x: false)(true)
 # comparisons of Church numbers
 leq = lambda m: lambda n: isZero(sub(m)(n))
-eq = lambda m: lambda n: AND(leq(m)(n))(leq(n)(m))
-lt = lambda m: lambda n: AND(leq(m)(n))(NOT(eq(m)(n)))
-gt = lambda m: lambda n: NOT(leq(m)(n))
+eq  = lambda m: lambda n: AND(leq(m)(n))(leq(n)(m))
+lt  = lambda m: lambda n: AND(leq(m)(n))(NOT(eq(m)(n)))
+gt  = lambda m: lambda n: NOT(leq(m)(n))
 geq = lambda m: lambda n: OR(eq(m)(n))(gt(m)(n))
 neq = lambda m: lambda n: NOT(eq(m)(n))
 
@@ -54,13 +54,13 @@ mod_step = lambda f: lambda m: lambda n: (lt(m)(n))(lambda _: m)(lambda _: f(sub
 mod = ycomb(mod_step)
 ########### LISTS #########################################
 pair = lambda x: lambda y: lambda z: z(x)(y)
-fst = lambda p: p(lambda x: lambda y: x)
-snd = lambda p: p(lambda x: lambda y: y)
+fst  = lambda p: p(lambda x: lambda y: x)
+snd  = lambda p: p(lambda x: lambda y: y)
 
-cons = lambda x: lambda y: lambda z: z(x)(y)
-head = lambda p: p(lambda x: lambda y: x)
-tail = lambda p: p(lambda x: lambda y: y)
-nil = lambda x: lambda x: lambda y: x
+cons    = lambda x: lambda y: lambda z: z(x)(y)
+head    = lambda p: p(lambda x: lambda y: x)
+tail    = lambda p: p(lambda x: lambda y: y)
+nil     = lambda x: lambda x: lambda y: x
 isempty = lambda l: l(lambda h: lambda t: lambda x: lambda y: y)
 
 init_step = lambda f: lambda xs: \
