@@ -82,5 +82,9 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 [1, 2, 3, 4, 5]
 >>> displayList(init(mylist1))
 [1, 2, 3, 4]
+>>> displayBool(elem(three)(mylist1))
+'TRUE'
+>>> displayBool(elem(church(22))(mylist1))
+'FALSE'
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 

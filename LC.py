@@ -93,6 +93,17 @@ reverse_step = lambda f: lambda xs: \
     (zero)
 
 reverse = lambda xs: ycomb(reverse_step)(xs)
+
+elem_step = lambda f: lambda x: lambda xs: \
+    isempty(xs) \
+        (lambda _: false) \
+        (eq(x)(head(xs)) \
+            (lambda _: true) \
+            (lambda _: f(x)(tail(xs))) \
+        ) \
+    (zero)
+
+elem = lambda x: lambda xs: ycomb(elem_step)(x)(xs)
 ################# Y-COMBINATOR #############################
 fact = lambda f: lambda n: ifthenelse(isZero(n))(lambda _: one)(lambda _: mult(n)(f(pred(n))))(one)
 #fact = lambda f: lambda n: isZero(n)(lambda _: one)(lambda _: mult(n)(f(pred(n))))(zero)  # this also works
@@ -128,22 +139,6 @@ xs = cons(one)(cons(three)(cons(five)(cons(seven)(cons(nine)(nil)))))    # xs = 
 ys = cons(two)(cons(four)(cons(six)(cons(eight)(cons(ten)(nil)))))   # ys = [2,4,6,8,10]
 
 ###################################################################################################
-#part_step = lambda f: lambda p: lambda l: \
-#    ifthenelse(isempty(l))(
-#        lambda _: pair(nil)(nil)
-#    )(
-#        lambda _: (
-#            lambda rec: (
-#                lambda h: ifthenelse(leq(h)(p))(
-#                    lambda _: pair(cons(h)(fst(rec)))(snd(rec))
-#                )(
-#                    lambda _: pair(fst(rec))(cons(h)(snd(rec)))
-#                )(zero)
-#            )(head(l))
-#        )(f(p)(tail(l)))
-#    )(zero)
-#partition = ycomb(part_step)
-
 xs2 = cons(five)(cons(three)(cons(one)(cons(nine)(cons(seven)(nil))))) 
 
 xs3 = cons(church(22))(cons(church(32))(cons(church(12))(cons(church(96))(cons(church(112))(cons(church(2))(cons(church(86))(cons(church(91))(cons(church(19))(cons(church(120))(cons(church(812))(cons(church(15))(cons(church(11))(cons(church(66))(cons(church(55))(nil)))))))))))))))
