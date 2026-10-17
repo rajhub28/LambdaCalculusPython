@@ -68,5 +68,7 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 [4, 10, 3, 5, 9]
 >>> displayList(append(mylist1)(mylist2))
 [1, 2, 3, 4, 5, 4, 10, 3, 5, 9]
+>>> displayList(reverse(mylist1))
+[5, 4, 3, 2, 1]
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 

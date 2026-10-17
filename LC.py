@@ -75,6 +75,14 @@ append_step = lambda f: lambda xs: lambda ys: \
     (zero)
 
 append = lambda xs: lambda ys: ycomb(append_step)(xs)(ys)
+
+reverse_step = lambda f: lambda xs: \
+    isempty(xs) \
+        (lambda _: xs) \
+        (lambda _: append(f(tail(xs)))(cons(head(xs))(nil))) \
+    (zero)
+
+reverse = lambda xs: ycomb(reverse_step)(xs)
 ################# Y-COMBINATOR #############################
 fact = lambda f: lambda n: ifthenelse(isZero(n))(lambda _: one)(lambda _: mult(n)(f(pred(n))))(one)
 #fact = lambda f: lambda n: isZero(n)(lambda _: one)(lambda _: mult(n)(f(pred(n))))(zero)  # this also works
