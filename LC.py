@@ -109,6 +109,17 @@ fact = lambda f: lambda n: ifthenelse(isZero(n))(lambda _: one)(lambda _: mult(n
 #fact = lambda f: lambda n: isZero(n)(lambda _: one)(lambda _: mult(n)(f(pred(n))))(zero)  # this also works
 factorial = lambda n: ycomb(fact)(n)
 
+fib_step = lambda f: lambda n: \
+    isZero(pred(n)) \
+        (lambda _: one) \
+        (isZero(pred(pred(n))) \
+            (lambda _: one) \
+            (lambda _: plus(f(pred(n)))(f(pred(pred(n))))) \
+        )\
+    (zero)
+
+fib = lambda n: ycomb(fib_step)(n)
+
 max = lambda x: lambda y: ifthenelse(leq)(x)(y)(y)(x)
 min = lambda x: lambda y: ifthenelse(leq)(x)(y)(x)(y)
 

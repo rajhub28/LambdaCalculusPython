@@ -86,5 +86,27 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 'TRUE'
 >>> displayBool(elem(church(22))(mylist1))
 'FALSE'
+>>> displayNum(fib(one))
+1
+>>> displayNum(fib(two))
+1
+>>> displayNum(fib(three))
+2
+>>> displayNum(fib(four))
+3
+>>> displayNum(fib(five))
+5
+>>> displayNum(fib(six))
+8
+>>> displayNum(fib(seven))
+13
+>>> displayNum(fib(eight))
+21
+>>> displayNum(fib(nine))
+34
+>>> displayNum(fib(ten))
+55
+>>> displayNum(fib(church(11)))
+89
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 
