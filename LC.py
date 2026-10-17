@@ -104,6 +104,13 @@ elem_step = lambda f: lambda x: lambda xs: \
     (zero)
 
 elem = lambda x: lambda xs: ycomb(elem_step)(x)(xs)
+
+# insert into list - no duplicates
+insert = lambda x: lambda xs: \
+    elem(x)(xs) \
+        (lambda _: xs) \
+        (lambda _: cons(x)(xs)) \
+    (zero)
 ################# Y-COMBINATOR #############################
 fact = lambda f: lambda n: ifthenelse(isZero(n))(lambda _: one)(lambda _: mult(n)(f(pred(n))))(one)
 #fact = lambda f: lambda n: isZero(n)(lambda _: one)(lambda _: mult(n)(f(pred(n))))(zero)  # this also works

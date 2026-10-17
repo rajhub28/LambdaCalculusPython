@@ -108,5 +108,11 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 55
 >>> displayNum(fib(church(11)))
 89
+>>> displayList(mylist1)
+[1, 2, 3, 4, 5]
+>>> displayList(insert(three)(mylist1))
+[1, 2, 3, 4, 5]
+>>> displayList(insert(six)(mylist1))
+[6, 1, 2, 3, 4, 5]
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 
