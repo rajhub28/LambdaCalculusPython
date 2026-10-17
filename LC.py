@@ -9,6 +9,8 @@ NOT = lambda p: lambda a: lambda b: p(b)(a)
 AND = lambda p: lambda q: p(q)(p)
 OR  = lambda p: lambda q: p(p)(q)
 
+eqbool = lambda p: lambda q: p(q)(NOT(q))
+
 displayBool = lambda b: "TRUE" if b(1)(2) == 1 else "FALSE"
 ########## CHURCH NUMERALS ###############################
 zero  = lambda f: lambda x: x

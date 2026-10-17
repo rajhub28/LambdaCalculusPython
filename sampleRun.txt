@@ -70,5 +70,13 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 [1, 2, 3, 4, 5, 4, 10, 3, 5, 9]
 >>> displayList(reverse(mylist1))
 [5, 4, 3, 2, 1]
+>>> displayBool(eqbool(true)(true))
+'TRUE'
+>>> displayBool(eqbool(true)(false))
+'FALSE'
+>>> displayBool(eqbool(false)(false))
+'TRUE'
+>>> displayBool(eqbool(false)(true))
+'FALSE'
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 
