@@ -62,5 +62,11 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 [4, 10, 3, 5, 9]
 >>> displayNum(last(mylist2))
 9
+>>> displayList(mylist1)
+[1, 2, 3, 4, 5]
+>>> displayList(mylist2)
+[4, 10, 3, 5, 9]
+>>> displayList(append(mylist1)(mylist2))
+[1, 2, 3, 4, 5, 4, 10, 3, 5, 9]
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 

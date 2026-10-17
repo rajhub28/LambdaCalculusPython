@@ -67,6 +67,14 @@ last_step = lambda f: lambda xs: \
         (lambda _: f(tail(xs))) \
     (zero)
 last = lambda xs: ycomb(last_step)(xs)
+
+append_step = lambda f: lambda xs: lambda ys: \
+    isempty(xs) \
+        (lambda _: ys) \
+        (lambda _: cons(head(xs))(f(tail(xs))(ys))) \
+    (zero)
+
+append = lambda xs: lambda ys: ycomb(append_step)(xs)(ys)
 ################# Y-COMBINATOR #############################
 fact = lambda f: lambda n: ifthenelse(isZero(n))(lambda _: one)(lambda _: mult(n)(f(pred(n))))(one)
 #fact = lambda f: lambda n: isZero(n)(lambda _: one)(lambda _: mult(n)(f(pred(n))))(zero)  # this also works
