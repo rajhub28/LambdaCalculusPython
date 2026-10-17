@@ -63,6 +63,14 @@ tail = lambda p: p(lambda x: lambda y: y)
 nil = lambda x: lambda x: lambda y: x
 isempty = lambda l: l(lambda h: lambda t: lambda x: lambda y: y)
 
+init_step = lambda f: lambda xs: \
+    isempty(tail(xs)) \
+        (lambda _: nil) \
+        (lambda _: cons(head(xs))(f(tail(xs)))) \
+    (zero)
+
+init = lambda xs: ycomb(init_step)(xs)
+
 last_step = lambda f: lambda xs: \
     isempty(tail(xs)) \
         (lambda _: head(xs)) \

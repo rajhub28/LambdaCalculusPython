@@ -78,5 +78,9 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 'TRUE'
 >>> displayBool(eqbool(false)(true))
 'FALSE'
+>>> displayList(mylist1)
+[1, 2, 3, 4, 5]
+>>> displayList(init(mylist1))
+[1, 2, 3, 4]
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 
