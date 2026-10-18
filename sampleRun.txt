@@ -124,5 +124,11 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 'FALSE'
 >>> displayBool(subset(mylist4)(mylist1))
 'TRUE'
+>>> displayBool(equal(mylist1)(mylist1))
+'TRUE'
+>>> displayBool(equal(mylist1)(mylist2))
+'FALSE'
+>>> displayBool(equal(mylist1)(mylist4))
+'FALSE'
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 

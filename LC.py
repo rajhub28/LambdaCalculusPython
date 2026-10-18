@@ -123,6 +123,7 @@ subset_step = lambda f: lambda xs: lambda ys: \
     (zero)
 
 subset = lambda xs: lambda ys: ycomb(subset_step)(xs)(ys)
+equal  = lambda xs: lambda ys: AND(subset(xs)(ys))(subset(ys)(xs))
 ################# Y-COMBINATOR #############################
 fact = lambda f: lambda n: ifthenelse(isZero(n))(lambda _: one)(lambda _: mult(n)(f(pred(n))))(one)
 #fact = lambda f: lambda n: isZero(n)(lambda _: one)(lambda _: mult(n)(f(pred(n))))(zero)  # this also works
