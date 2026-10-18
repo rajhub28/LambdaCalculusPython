@@ -217,7 +217,22 @@ ys = cons(two)(cons(four)(cons(six)(cons(eight)(cons(ten)(nil)))))   # ys = [2,4
 ###################################################################################################
 xs2 = cons(five)(cons(three)(cons(one)(cons(nine)(cons(seven)(nil))))) 
 
-xs3 = cons(church(22))(cons(church(32))(cons(church(12))(cons(church(96))(cons(church(112))(cons(church(2))(cons(church(86))(cons(church(91))(cons(church(19))(cons(church(120))(cons(church(812))(cons(church(15))(cons(church(11))(cons(church(66))(cons(church(55))(nil)))))))))))))))
+xs3 = cons(church(22))(  \
+      cons(church(32))(  \
+      cons(church(12))(  \
+      cons(church(96))(  \
+      cons(church(112))( \
+      cons(church(2))(   \
+      cons(church(86))(  \
+      cons(church(91))(  \
+      cons(church(19))(  \
+      cons(church(120))( \
+      cons(church(812))( \
+      cons(church(15))(  \
+      cons(church(11))(  \
+      cons(church(66))(  \
+      cons(church(55))(  \
+      nil)))))))))))))))
 ################ QUICKSORT #################################################################
 qsplit_step = lambda f: lambda x: lambda xs: \
     isempty(xs) \
