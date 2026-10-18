@@ -111,6 +111,18 @@ insert = lambda x: lambda xs: \
         (lambda _: xs) \
         (lambda _: cons(x)(xs)) \
     (zero)
+
+# subset
+subset_step = lambda f: lambda xs: lambda ys: \
+    isempty(xs) \
+        (lambda _: true) \
+        (elem(head(xs))(ys) \
+            (lambda _: f(tail(xs))(ys)) \
+            (lambda _: false) \
+        ) \
+    (zero)
+
+subset = lambda xs: lambda ys: ycomb(subset_step)(xs)(ys)
 ################# Y-COMBINATOR #############################
 fact = lambda f: lambda n: ifthenelse(isZero(n))(lambda _: one)(lambda _: mult(n)(f(pred(n))))(one)
 #fact = lambda f: lambda n: isZero(n)(lambda _: one)(lambda _: mult(n)(f(pred(n))))(zero)  # this also works
@@ -133,6 +145,7 @@ min = lambda x: lambda y: ifthenelse(leq)(x)(y)(x)(y)
 mylist1 = cons(one)(cons(two)(cons(three)(cons(four)(cons(five)(nil)))))    # mylist1 = [1,2,3,4,5]
 mylist2 = cons(four)(cons(ten)(cons(three)(cons(five)(cons(nine)(nil)))))   # mylist2 = [4,10,3,5,9]
 mylist3 = cons(eight)(cons(ten)(cons(seven)(cons(six)(cons(nine)(nil)))))   # mylist3 = [8,10,7,6,9]
+mylist4 = cons(one)(cons(three)(cons(five)(nil)))   # mylist4 = [1,3,5]
 
 slist = lambda f: lambda x: ifthenelse(isempty(x))(lambda _: zero)(lambda _: plus(head(x))(f((tail(x)))))(zero)
 dlist = lambda f: lambda x: ifthenelse(isempty(x))(lambda _: nil)(lambda _: cons(head(x))(cons(head(x))(f(tail(x)))))(zero)

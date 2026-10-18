@@ -114,5 +114,15 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 [1, 2, 3, 4, 5]
 >>> displayList(insert(six)(mylist1))
 [6, 1, 2, 3, 4, 5]
+>>> displayList(mylist4)
+[1, 3, 5]
+>>> displayList(mylist1)
+[1, 2, 3, 4, 5]
+>>> displayList(mylist2)
+[4, 10, 3, 5, 9]
+>>> displayBool(subset(mylist1)(mylist2))
+'FALSE'
+>>> displayBool(subset(mylist4)(mylist1))
+'TRUE'
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 
