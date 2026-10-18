@@ -47,11 +47,21 @@ geq = lambda m: lambda n: OR(eq(m)(n))(gt(m)(n))
 neq = lambda m: lambda n: NOT(eq(m)(n))
 
 # additional arithmetic operators: div, mod
-div_step = lambda f: lambda m: lambda n: lt(m)(n)(lambda _: zero)(lambda _: succ(f(sub(m)(n))(n)))(zero)
-div = ycomb(div_step)
+div_step = lambda f: lambda m: lambda n: \
+    lt(m)(n) \
+        (lambda _: zero) \
+        (lambda _: succ(f(sub(m)(n))(n))) \
+    (zero)
 
-mod_step = lambda f: lambda m: lambda n: (lt(m)(n))(lambda _: m)(lambda _: f(sub(m)(n))(n))(zero)
-mod = ycomb(mod_step)
+div = lambda m: lambda n: ycomb(div_step)(m)(n)
+
+mod_step = lambda f: lambda m: lambda n: \
+    lt(m)(n) \
+        (lambda _: m) \
+        (lambda _: f(sub(m)(n))(n)) \
+    (zero)
+
+mod = lambda m: lambda n: ycomb(mod_step)(m)(n)
 ########### LISTS #########################################
 pair = lambda x: lambda y: lambda z: z(x)(y)
 fst  = lambda p: p(lambda x: lambda y: x)
@@ -125,9 +135,13 @@ subset_step = lambda f: lambda xs: lambda ys: \
 subset = lambda xs: lambda ys: ycomb(subset_step)(xs)(ys)
 equal  = lambda xs: lambda ys: AND(subset(xs)(ys))(subset(ys)(xs))
 ################# Y-COMBINATOR #############################
-fact = lambda f: lambda n: ifthenelse(isZero(n))(lambda _: one)(lambda _: mult(n)(f(pred(n))))(one)
-#fact = lambda f: lambda n: isZero(n)(lambda _: one)(lambda _: mult(n)(f(pred(n))))(zero)  # this also works
-factorial = lambda n: ycomb(fact)(n)
+fact_step = lambda f: lambda n: \
+    isZero(n) \
+        (lambda _: one) \
+        (lambda _: mult(n)(f(pred(n)))) \
+    (zero)
+
+fact = lambda n: ycomb(fact_step)(n)
 
 fib_step = lambda f: lambda n: \
     isZero(pred(n)) \
@@ -135,35 +149,65 @@ fib_step = lambda f: lambda n: \
         (isZero(pred(pred(n))) \
             (lambda _: one) \
             (lambda _: plus(f(pred(n)))(f(pred(pred(n))))) \
-        )\
+        ) \
     (zero)
 
 fib = lambda n: ycomb(fib_step)(n)
 
-max = lambda x: lambda y: ifthenelse(leq)(x)(y)(y)(x)
-min = lambda x: lambda y: ifthenelse(leq)(x)(y)(x)(y)
+minn = lambda x: lambda y: leq(x)(y)(x)(y)
+maxx = lambda x: lambda y: leq(x)(y)(y)(x)
 
 mylist1 = cons(one)(cons(two)(cons(three)(cons(four)(cons(five)(nil)))))    # mylist1 = [1,2,3,4,5]
 mylist2 = cons(four)(cons(ten)(cons(three)(cons(five)(cons(nine)(nil)))))   # mylist2 = [4,10,3,5,9]
 mylist3 = cons(eight)(cons(ten)(cons(seven)(cons(six)(cons(nine)(nil)))))   # mylist3 = [8,10,7,6,9]
 mylist4 = cons(one)(cons(three)(cons(five)(nil)))   # mylist4 = [1,3,5]
 
-slist = lambda f: lambda x: ifthenelse(isempty(x))(lambda _: zero)(lambda _: plus(head(x))(f((tail(x)))))(zero)
-dlist = lambda f: lambda x: ifthenelse(isempty(x))(lambda _: nil)(lambda _: cons(head(x))(cons(head(x))(f(tail(x)))))(zero)
-zlist = lambda f: lambda x: ifthenelse(isempty(x))(lambda _: zero)(lambda _: plus(one)(f(tail(x))))(zero)
-xlist = lambda f: lambda x: ifthenelse(isempty(x))(lambda _: zero)(lambda _: ifthenelse(leq(head(x)))(f(tail(x)))(f(tail(x)))(head(x)))(zero)
+# sum numbers in a list
+slist_step = lambda f: lambda xs: \
+    isempty(xs) \
+        (lambda _: zero) \
+        (lambda _: plus(head(xs))(f((tail(xs))))) \
+    (zero)
 
-sumlist = lambda l: ycomb(slist)(l)  # returns sum of numbers in a list
-doublelist = lambda l: ycomb(dlist)(l) # returns a list of duplicated elements of a list
-length = lambda l: ycomb(zlist)(l) # returns size of a list
-maxlist = lambda l: ycomb(xlist)(l) # returns max element in a list
+sumlist = lambda xs: ycomb(slist_step)(xs)
+
+# double each element in a list
+dlist_step = lambda f: lambda xs: \
+    isempty(xs) \
+        (lambda _: nil) \
+        (lambda _: cons(head(xs))(cons(head(xs))(f(tail(xs))))) \
+    (zero)
+
+doublelist = lambda xs: ycomb(dlist_step)(xs)
+
+# length of a list
+zlist_step = lambda f: lambda xs: \
+    isempty(xs) \
+        (lambda _: zero) \
+        (lambda _: plus(one)(f(tail(xs)))) \
+    (zero)
+
+length = lambda xs: ycomb(zlist_step)(xs)
+
+# max number in list
+xlist_step = lambda f: lambda xs: \
+    isempty(xs) \
+        (lambda _: zero) \
+        (lambda _: leq(head(xs))(f(tail(xs)))(f(tail(xs)))(head(xs))) \
+    (zero)
+
+maxlist = lambda xs: ycomb(xlist_step)(xs)
 
 ###################################################################################################
 ## DISPLAY LIST OF NUMBERS
-display_list_fn = lambda f: lambda x: ifthenelse(isempty(x))(lambda _: [])(lambda _: [displayNum(head(x))] + f(tail(x)))(zero)
+display_list_step = lambda f: lambda xs: \
+    isempty(xs) \
+        (lambda _: []) \
+        (lambda _: [displayNum(head(xs))] + f(tail(xs))) \
+    (zero)
 
 # Recursive display function
-displayList = lambda l: ycomb(display_list_fn)(l)
+displayList = lambda xs: ycomb(display_list_step)(xs)
 
 ###################################################################################################
 # data to test merge two sorted lists
