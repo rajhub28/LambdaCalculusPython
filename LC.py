@@ -209,6 +209,11 @@ display_list_step = lambda f: lambda xs: \
 # Recursive display function
 displayList = lambda xs: ycomb(display_list_step)(xs)
 
+## DISPLAY List of Lists of numbers
+displayListOfLists = lambda ll: ifthenelse(isempty(ll))\
+    (lambda _: [])\
+    (lambda _: [head(mapp(displayList)(ll))] + displayListOfLists(tail(ll)))\
+(zero)
 ###################################################################################################
 # data to test merge two sorted lists
 xs = cons(one)(cons(three)(cons(five)(cons(seven)(cons(nine)(nil)))))    # xs = [1,3,5,7,9]
@@ -362,6 +367,17 @@ disjoint_step = lambda f: lambda xs: lambda ys: \
 disjoint = lambda xs: lambda ys: ycomb(disjoint_step)(xs)(ys)
 # displayBool(disjoint(mylist1)(mylist2))
 # displayBool(disjoint(mylist1)(mylist3))
+##########################################################################################
+bs = cons(one)(cons(two)(cons(three)(nil)))
+subsets_step = lambda f: lambda xs: \
+    isempty(xs)\
+        (lambda _: cons(nil)(nil))\
+        (lambda _: (lambda recursive_subsets: \
+            append(recursive_subsets)(mapp(lambda x: cons(head(xs))(x))(recursive_subsets))\
+        )(f(tail(xs))))\
+    (zero)
+subsets = lambda xs: ycomb(subsets_step)(xs)
+# displayListOfLists(subsets(bs))
 ##########################################################################################
 ordered_step = lambda f: lambda xs: \
     isempty(xs)\

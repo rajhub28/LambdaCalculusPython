@@ -21,6 +21,7 @@ Some list functions implemented are:
 - mergesort a list of numbers
 - test if two lists of numbers are disjoint
 - test if a list of numbers is ordered (sorted)
+- generate subsets of a list of numbers
 
 Higher order functions: 
 
