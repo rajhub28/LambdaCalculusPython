@@ -373,6 +373,17 @@ disjoint = lambda xs: lambda ys: ycomb(disjoint_step)(xs)(ys)
 # displayBool(disjoint(mylist1)(mylist2))
 # displayBool(disjoint(mylist1)(mylist3))
 ##########################################################################################
+## union
+union_step = lambda f: lambda xs: lambda ys: \
+    isempty(xs) \
+        (lambda _: ys) \
+        (elem(head(xs))(ys) \
+            (lambda _: f(tail(xs))(ys)) \
+            (lambda _: cons(head(xs))(f(tail(xs))(ys))) \
+        ) \
+    (zero)
+union = lambda xs: lambda ys: ycomb(union_step)(xs)(ys)
+##########################################################################################
 ## intersect
 intersect_step = lambda f: lambda xs: lambda ys: \
     isempty(xs) \
@@ -383,6 +394,17 @@ intersect_step = lambda f: lambda xs: lambda ys: \
         ) \
     (zero)
 intersect = lambda xs: lambda ys: ycomb(intersect_step)(xs)(ys)
+##########################################################################################
+## intersect
+difference_step = lambda f: lambda xs: lambda ys: \
+    isempty(xs) \
+        (lambda _: nil) \
+        (elem(head(xs))(ys) \
+            (lambda _: f(tail(xs))(ys)) \
+            (lambda _: cons(head(xs))(f(tail(xs))(ys))) \
+        ) \
+    (zero)
+difference = lambda xs: lambda ys: ycomb(difference_step)(xs)(ys)
 ##########################################################################################
 bs = cons(one)(cons(two)(cons(three)(nil)))
 subsets_step = lambda f: lambda xs: \
