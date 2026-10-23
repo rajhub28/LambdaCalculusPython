@@ -73,6 +73,7 @@ tail    = lambda p: p(lambda x: lambda y: y)
 nil     = lambda x: lambda x: lambda y: x
 isempty = lambda l: l(lambda h: lambda t: lambda x: lambda y: y)
 
+## init of Haskell - all but last element
 init_step = lambda f: lambda xs: \
     isempty(tail(xs)) \
         (lambda _: nil) \
@@ -81,6 +82,7 @@ init_step = lambda f: lambda xs: \
 
 init = lambda xs: ycomb(init_step)(xs)
 
+## last item of a list
 last_step = lambda f: lambda xs: \
     isempty(tail(xs)) \
         (lambda _: head(xs)) \
@@ -88,6 +90,7 @@ last_step = lambda f: lambda xs: \
     (zero)
 last = lambda xs: ycomb(last_step)(xs)
 
+## append two lists
 append_step = lambda f: lambda xs: lambda ys: \
     isempty(xs) \
         (lambda _: ys) \
@@ -96,6 +99,7 @@ append_step = lambda f: lambda xs: lambda ys: \
 
 append = lambda xs: lambda ys: ycomb(append_step)(xs)(ys)
 
+## reverse a list
 reverse_step = lambda f: lambda xs: \
     isempty(xs) \
         (lambda _: xs) \
@@ -104,6 +108,7 @@ reverse_step = lambda f: lambda xs: \
 
 reverse = lambda xs: ycomb(reverse_step)(xs)
 
+## is x an element of xs?
 elem_step = lambda f: lambda x: lambda xs: \
     isempty(xs) \
         (lambda _: false) \
@@ -368,6 +373,18 @@ disjoint = lambda xs: lambda ys: ycomb(disjoint_step)(xs)(ys)
 # displayBool(disjoint(mylist1)(mylist2))
 # displayBool(disjoint(mylist1)(mylist3))
 ##########################################################################################
+## intersect
+intersect_step = lambda f: lambda xs: lambda ys: \
+    isempty(xs) \
+        (lambda _: nil) \
+        (elem(head(xs))(ys) \
+            (lambda _: cons(head(xs))(f(tail(xs))(ys))) \
+            (lambda _: f(tail(xs))(ys)) \
+        ) \
+    (zero)
+intersect = lambda xs: lambda ys: ycomb(intersect_step)(xs)(ys)
+##########################################################################################
+
 bs = cons(one)(cons(two)(cons(three)(nil)))
 subsets_step = lambda f: lambda xs: \
     isempty(xs)\

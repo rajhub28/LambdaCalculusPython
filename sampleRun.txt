@@ -130,7 +130,15 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 'FALSE'
 >>> displayBool(equal(mylist1)(mylist4))
 'FALSE'
+>>> displayList(bs)
+[1, 2, 3]
 >>> displayListOfLists(subsets(bs))
 [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]
+>>> displayList(mylist1)
+[1, 2, 3, 4, 5]
+>>> displayList(mylist2)
+[4, 10, 3, 5, 9]
+>>> displayList(intersect(mylist1)(mylist2))
+[3, 4, 5]
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 
