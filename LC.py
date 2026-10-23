@@ -384,15 +384,17 @@ intersect_step = lambda f: lambda xs: lambda ys: \
     (zero)
 intersect = lambda xs: lambda ys: ycomb(intersect_step)(xs)(ys)
 ##########################################################################################
-
 bs = cons(one)(cons(two)(cons(three)(nil)))
 subsets_step = lambda f: lambda xs: \
     isempty(xs)\
         (lambda _: cons(nil)(nil))\
         (lambda _: (lambda recursive_subsets: \
-            append(recursive_subsets)(mapp(lambda x: cons(head(xs))(x))(recursive_subsets))\
-        )(f(tail(xs))))\
-    (zero)
+                      append(recursive_subsets) \
+                            (mapp(lambda x: cons(head(xs))(x))(recursive_subsets))
+                   ) \
+                   (f(tail(xs))) \
+        ) \
+        (zero)
 subsets = lambda xs: ycomb(subsets_step)(xs)
 # displayListOfLists(subsets(bs))
 ##########################################################################################
