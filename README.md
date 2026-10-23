@@ -22,7 +22,7 @@ Some list functions implemented are:
 - test if two lists of numbers are disjoint
 - test if a list of numbers is ordered (sorted)
 - generate subsets of a list of numbers
-- intersect two lists of numbers
+- union, intersect, difference of two lists of numbers
 
 Higher order functions: 
 
