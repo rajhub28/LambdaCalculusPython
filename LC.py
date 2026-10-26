@@ -26,7 +26,7 @@ nine  = lambda f: lambda x: f(f(f(f(f(f(f(f(f(x)))))))))
 ten   = lambda f: lambda x: f(f(f(f(f(f(f(f(f(f(x))))))))))
 
 succ = lambda n: lambda f: lambda x: (f(n(f)(x)))
-plus = lambda m: lambda n: lambda f: lambda x: m(f)((n(f)(x)))
+add = lambda m: lambda n: lambda f: lambda x: m(f)((n(f)(x)))
 mult = lambda m: lambda n: lambda f: lambda x: m(n(f))(x)
 pred = lambda n: lambda f: lambda x: (n(lambda g: lambda h: h(g(f)))(lambda u: x))(lambda u: u)
 sub  = lambda m: lambda n: n(pred)(m)
@@ -153,7 +153,7 @@ fib_step = lambda f: lambda n: \
         (lambda _: one) \
         (isZero(pred(pred(n))) \
             (lambda _: one) \
-            (lambda _: plus(f(pred(n)))(f(pred(pred(n))))) \
+            (lambda _: add(f(pred(n)))(f(pred(pred(n))))) \
         ) \
     (zero)
 
@@ -171,7 +171,7 @@ mylist4 = cons(one)(cons(three)(cons(five)(nil)))   # mylist4 = [1,3,5]
 slist_step = lambda f: lambda xs: \
     isempty(xs) \
         (lambda _: zero) \
-        (lambda _: plus(head(xs))(f((tail(xs))))) \
+        (lambda _: add(head(xs))(f((tail(xs))))) \
     (zero)
 
 sumlist = lambda xs: ycomb(slist_step)(xs)
@@ -189,7 +189,7 @@ doublelist = lambda xs: ycomb(dlist_step)(xs)
 zlist_step = lambda f: lambda xs: \
     isempty(xs) \
         (lambda _: zero) \
-        (lambda _: plus(one)(f(tail(xs)))) \
+        (lambda _: add(one)(f(tail(xs)))) \
     (zero)
 
 length = lambda xs: ycomb(zlist_step)(xs)
@@ -343,7 +343,7 @@ foldr_step = lambda f: lambda g: lambda acc: lambda xs: \
       (lambda _: g(head(xs))(f(g)(acc)(tail(xs)))) (zero)
             
 foldr = lambda g: lambda acc: lambda xs: ycomb(foldr_step)(g)(acc)(xs)
-# displayList(mylist# displayNum(foldr(plus)(zero)(mylist1))
+# displayList(mylist# displayNum(foldr(add)(zero)(mylist1))
 ##########################################################################################
 # foldl :: (b -> a -> b) -> b -> [a] -> b
 # foldl f z []     = z
@@ -436,7 +436,81 @@ ordered = lambda xs: ycomb(ordered_step)(xs)
 # displayBool(ordered(mylist2))
 # displayBool(ordered(mylist3))
 ##########################################################################################
-# Binary Tree of Numbers
+# Char data
+
+between = lambda low: lambda high: lambda x: AND(geq(x)(low))(leq(x)(high)) # low <= x <= high
+
+# Character Constructors (ASCII Encodings)
+# Numbers: '0' (48) to '9' (57)
+# Upper:   'A' (65) to 'Z' (90)
+# Lower:   'a' (97) to 'z' (122)
+encode_char = lambda c: church(ord(c))
+decode_char = lambda n: chr(displayNum(n))
+
+# Predicates using ASCII bounds
+isDigit = between(encode_char('0'))(encode_char('9'))
+isUpper = between(encode_char('A'))(encode_char('Z'))
+isLower = between(encode_char('a'))(encode_char('z'))
+
+# Convert uppercase character to lowercase
+toLower = lambda c: \
+    isUpper(c) \
+        (lambda _: add(c)(church(32))) \
+        (lambda _: c) \
+    (zero)
+
+# Convert lowercase character to uppercase
+toUpper = lambda c: \
+    isLower(c) \
+        (lambda _: sub(c)(church(32))) \
+        (lambda _: c) \
+    (zero)
+
+# Example characters
+char_A = encode_char('A')
+char_g = encode_char('g')
+char_5 = encode_char('5')
+
+#displayBool(isUpper(char_A)))
+#displayBool(isLower(char_A)))
+#displayBool(isDigit(char_5)))
+#displayNum(toLower(char_A)))
+#######################################################################
+# String data as a list of char data
+encode_str_step = lambda f: lambda s: nil if s=="" else cons(encode_char(s[0]))(f(s[1:]))
+encode_str = lambda s: ycomb(encode_str_step)(s)
+
+decode_str_step = lambda f: lambda s: \
+    isempty(s) \
+        (lambda _: "") \
+        (lambda _: decode_char(head(s))+f(tail(s))) \
+    (zero)
+decode_str = lambda s: ycomb(decode_str_step)(s)
+
+displaySList = lambda xs: \
+    isempty(xs) \
+        (lambda _: []) \
+        (lambda _: [decode_str(head(xs))] + displaySList(tail(xs))) \
+    (zero)
+
+strlen = lambda s: length(s)
+isempty_str = lambda s: eq(strlen(s))(zero)
+strcat = lambda s1: lambda s2: append(s1)(s2)
+
+### let's implement Python's s.join(lst)!
+join_step = lambda f: lambda sep: lambda xss: \
+    isempty_str(xss) \
+        (lambda _: nil) \
+            (isempty_str(tail(xss)) \
+                (lambda _: head(xss)) \
+            ) \
+            (lambda _: strcat(head(xss))(strcat(sep)(f(sep)(tail(xss))))) \
+    (zero)
+join = lambda sep: lambda xss: ycomb(join_step)(sep)(xss)
+
+# sss = cons(encode_str("Donald"))(cons(encode_str("22-Sep-2000"))(cons(encode_str("10 Main Street"))(nil)))
+# decode_str(join(encode_str(":"))(sss))
+#######################################################################
 # Binary Tree of Numbers
 #leaf = lambda n: lambda l: l
 #node = lambda v: lambda left: lambda right: \
@@ -454,7 +528,7 @@ ordered = lambda xs: ycomb(ordered_step)(xs)
 #tree5 = node(five)(leaf)(leaf)
 #my_tree2 = node(four)(tree2)(tree5)
 #
-#sum_tree = lambda t: t(lambda v: lambda l_sum: lambda r_sum: plus(v)(plus(l_sum)(r_sum)))(zero)
-#size_tree = lambda t: t(lambda v: lambda l_size: lambda r_size: plus(one)(plus(l_size)(r_size)))(zero)
+#sum_tree = lambda t: t(lambda v: lambda l_sum: lambda r_sum: add(v)(add(l_sum)(r_sum)))(zero)
+#size_tree = lambda t: t(lambda v: lambda l_size: lambda r_size: add(one)(add(l_size)(r_size)))(zero)
 #
 ###########################################################################################

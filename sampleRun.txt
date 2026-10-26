@@ -144,5 +144,13 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 [3, 4, 5]
 >>> displayList(difference(mylist1)(mylist2))
 [1, 2]
+>>> sss = cons(encode_str("Donald"))(cons(encode_str("22-Sep-2000"))(cons(encode_str("10 Main Street"))(nil)))
+>>> displaySList(sss)
+['Donald', '22-Sep-2000', '10 Main Street']
+>>> sep = encode_str(":")
+>>> decode_str(sep)
+':'
+>>> decode_str(join(sep)(sss))
+'Donald:22-Sep-2000:10 Main Street'
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 
