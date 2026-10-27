@@ -5,6 +5,7 @@ LC.py contains a list of lambda expressions in Python that implement Church's La
 - Boolean type and operators
 - Number type (0, 1, ...) and operations on numbers
 - Pair and List data structure and associated operators
+- Signed numbers (...,-3, -2, -1, 0, 1, 2, 3, ...) and some operations
 - Char data type, isLower, isUpper, isDigit, toLower, toUpper
 - String data type as a list of Char data
 
@@ -13,6 +14,8 @@ Some String functions implemented are:
 - strlen
 - strcat
 - join
+- is_prefic
+- find substring in string, return index as signed number
 
 Some numeric functions implemented are:
 
