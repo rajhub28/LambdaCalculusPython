@@ -152,5 +152,10 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 ':'
 >>> decode_str(join(sep)(sss))
 'Donald:22-Sep-2000:10 Main Street'
+>>> s = encode_str("22-Sep-2000")
+>>> displaySignedNum(find(encode_str("20"))(s))
+7
+>>> displaySignedNum(find(encode_str("29"))(s))
+-1
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 

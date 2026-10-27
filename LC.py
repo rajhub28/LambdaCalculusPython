@@ -12,6 +12,11 @@ OR  = lambda p: lambda q: p(p)(q)
 eqbool = lambda p: lambda q: p(q)(NOT(q))
 
 displayBool = lambda b: "TRUE" if b(1)(2) == 1 else "FALSE"
+########### Pair data structure ################
+pair = lambda x: lambda y: lambda z: z(x)(y)
+fst  = lambda p: p(lambda x: lambda y: x)
+snd  = lambda p: p(lambda x: lambda y: y)
+
 ########## CHURCH NUMERALS ###############################
 zero  = lambda f: lambda x: x
 one   = lambda f: lambda x: f(x)
@@ -62,11 +67,51 @@ mod_step = lambda f: lambda m: lambda n: \
     (zero)
 
 mod = lambda m: lambda n: ycomb(mod_step)(m)(n)
-########### LISTS #########################################
-pair = lambda x: lambda y: lambda z: z(x)(y)
-fst  = lambda p: p(lambda x: lambda y: x)
-snd  = lambda p: p(lambda x: lambda y: y)
+########### Signed Numbers ################################
+# Signed Number Constructors
+make_pos = lambda n: pair(n)(zero)
+make_neg = lambda n: pair(zero)(n)
 
+# Extract components
+pos_part = fst
+neg_part = snd
+
+# Normalize pair (p, n) by subtracting min(p, n) from both parts
+norm_step = lambda f: lambda p: \
+    OR(isZero(pos_part(p)))(isZero(neg_part(p))) \
+    (lambda _: p) \
+    (lambda _: f(pair(pred(pos_part(p)))(pred(neg_part(p))))) \
+    (zero)
+
+normalize = lambda p: ycomb(norm_step)(p)
+
+# Display signed number as a Python integer
+displaySignedNum = lambda p: (lambda np: displayNum(pos_part(np)) - displayNum(neg_part(np)))(normalize(p))
+
+# Signed Operations
+add_signed = lambda p1: lambda p2: normalize(
+    pair(add(pos_part(p1))(pos_part(p2)))(add(neg_part(p1))(neg_part(p2)))
+)
+
+sub_signed = lambda p1: lambda p2: normalize(
+    pair(add(pos_part(p1))(neg_part(p2)))(add(neg_part(p1))(pos_part(p2)))
+)
+
+negate = lambda p: pair(neg_part(p))(pos_part(p))
+
+mult_signed = lambda p1: lambda p2: normalize(
+    pair(
+        add(mult(pos_part(p1))(pos_part(p2)))(mult(neg_part(p1))(neg_part(p2)))
+    )(
+        add(mult(pos_part(p1))(neg_part(p2)))(mult(neg_part(p1))(pos_part(p2)))
+    )
+)
+
+# Predicates
+is_neg = lambda p: (lambda np: AND(isZero(pos_part(np)))(NOT(isZero(neg_part(np)))))(normalize(p))
+is_pos = lambda p: (lambda np: AND(NOT(isZero(pos_part(np))))(isZero(neg_part(np))))(normalize(p))
+is_zero_signed = lambda p: (lambda np: AND(isZero(pos_part(np)))(isZero(neg_part(np))))(normalize(p))
+########### LISTS #########################################
 cons    = lambda x: lambda y: lambda z: z(x)(y)
 head    = lambda p: p(lambda x: lambda y: x)
 tail    = lambda p: p(lambda x: lambda y: y)
@@ -510,6 +555,50 @@ join = lambda sep: lambda xss: ycomb(join_step)(sep)(xss)
 
 # sss = cons(encode_str("Donald"))(cons(encode_str("22-Sep-2000"))(cons(encode_str("10 Main Street"))(nil)))
 # decode_str(join(encode_str(":"))(sss))
+#
+# Let's implement find substring 
+#find = lambda xs: lambda ys: ycomb(find_step)(xs)(ys)
+# Helper: Checks if list/string xs is a prefix of ys
+is_prefix_step = lambda f: lambda xs: lambda ys: \
+    isempty(xs) \
+    (lambda _: true) \
+    (isempty(ys) \
+        (lambda _: false) \
+        (eq(head(xs))(head(ys)) \
+            (lambda _: f(tail(xs))(tail(ys))) \
+            (lambda _: false) \
+        ) \
+    ) \
+    (zero)
+
+is_prefix = lambda xs: lambda ys: ycomb(is_prefix_step)(xs)(ys)
+
+# Main recursive search function tracking current index `idx`
+#find_step = lambda f: lambda xs: lambda ys: lambda idx: \
+#    is_prefix(xs)(ys) \
+#        (lambda _: idx) \
+#        (isempty(ys) \
+#            (lambda _:  false) \
+#            (lambda _: f(xs)(tail(ys))(succ(idx))) \
+#        ) \
+#    (zero)
+
+# Public interface initializing index to zero
+#find = lambda xs: lambda ys: ycomb(find_step)(xs)(ys)(zero)
+
+minus_one = make_neg(one)
+
+find_step = lambda f: lambda xs: lambda ys: lambda idx: \
+    is_prefix(xs)(ys) \
+    (lambda _: make_pos(idx)) \
+    (isempty(ys) \
+        (lambda _: minus_one) \
+        (lambda _: f(xs)(tail(ys))(succ(idx))) \
+    ) \
+    (zero)
+
+find = lambda xs: lambda ys: ycomb(find_step)(xs)(ys)(zero)
+
 #######################################################################
 # Binary Tree of Numbers
 #leaf = lambda n: lambda l: l
