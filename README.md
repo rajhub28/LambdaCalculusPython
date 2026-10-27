@@ -14,7 +14,7 @@ Some String functions implemented are:
 - strlen
 - strcat
 - join
-- is_prefic
+- is_prefix
 - find substring in string, return index as signed number
 
 Some numeric functions implemented are:
