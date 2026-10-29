@@ -178,5 +178,8 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 'lo'
 >>> decode_str(suffix(s)(church(4)))
 'o'
+>>> s = encode_str("this is a string")
+>>> decode_str(substr(s)(church(2))(church(6)))
+'is is'
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 

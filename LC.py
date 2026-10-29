@@ -573,6 +573,8 @@ is_prefix_step = lambda f: lambda xs: lambda ys: \
 
 is_prefix = lambda xs: lambda ys: ycomb(is_prefix_step)(xs)(ys)
 
+# is_suffix
+
 # Main recursive search function tracking current index `idx`
 #find_step = lambda f: lambda xs: lambda ys: lambda idx: \
 #    is_prefix(xs)(ys) \
@@ -585,6 +587,8 @@ is_prefix = lambda xs: lambda ys: ycomb(is_prefix_step)(xs)(ys)
 
 # Public interface initializing index to zero
 #find = lambda xs: lambda ys: ycomb(find_step)(xs)(ys)(zero)
+
+# contains
 
 minus_one = make_neg(one)
 
@@ -616,13 +620,11 @@ suffix_step = lambda f: lambda s: lambda i: \
 
 suffix = lambda s: lambda i: ycomb(suffix_step)(s)(i)
 # Extract substring ala Python slice operator!
-#substr_step = lambda f: lambda s: lambda i: lambda j: \
-#    OR(geq(i)(strlen(s)))(OR(geq(j)(strlen(s)))(geq(j)(i))) \
-#        (lambda _: lambda x: lambda y: y) \ # return false??
-#        (lambda _: prefix(suffix(s)(i))(sub(j)(i))) \
-#    (zero)
-#
-#substr = lambda s: lambda i: lambda j: ycomb(substr_step)(s)(i)(j)
+substr = lambda s: lambda i: lambda j: \
+    OR(geq(i)(strlen(s)))(OR(geq(j)(strlen(s)))(lt(j)(i))) \
+        (lambda _: nil) \
+        (lambda _: prefix(suffix(s)(i))(sub(j)(i))) \
+    (zero)
 #######################################################################
 # Binary Tree of Numbers
 #leaf = lambda n: lambda l: l

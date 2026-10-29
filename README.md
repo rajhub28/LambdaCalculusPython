@@ -16,7 +16,8 @@ Some String functions implemented are:
 - join
 - is_prefix
 - find substring in string, return index as signed number
-- prefix, suffix
+- extract prefix, suffix of strings at an index
+- extract substring given left and right indices
 
 Some numeric functions implemented are:
 
