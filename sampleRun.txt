@@ -157,5 +157,26 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 7
 >>> displaySignedNum(find(encode_str("29"))(s))
 -1
+>>> s = encode_str("hello")
+>>> decode_str(prefix(s)(church(0)))
+'h'
+>>> decode_str(prefix(s)(church(1)))
+'he'
+>>> decode_str(prefix(s)(church(2)))
+'hel'
+>>> decode_str(prefix(s)(church(3)))
+'hell'
+>>> decode_str(prefix(s)(church(4)))
+'hello'
+>>> decode_str(suffix(s)(church(0)))
+'hello'
+>>> decode_str(suffix(s)(church(1)))
+'ello'
+>>> decode_str(suffix(s)(church(2)))
+'llo'
+>>> decode_str(suffix(s)(church(3)))
+'lo'
+>>> decode_str(suffix(s)(church(4)))
+'o'
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 

@@ -598,7 +598,31 @@ find_step = lambda f: lambda xs: lambda ys: lambda idx: \
     (zero)
 
 find = lambda xs: lambda ys: ycomb(find_step)(xs)(ys)(zero)
+#######################################################################
+# get prefix of string s until index i
+prefix_step = lambda f: lambda s: lambda i: \
+    isZero(i) \
+        (lambda _: cons(head(s))(nil)) \
+        (lambda _: cons(head(s))(f(tail(s))(pred(i)))) \
+    (zero)
 
+prefix = lambda s: lambda i: ycomb(prefix_step)(s)(i)
+# get suffix of string s starting at index i
+suffix_step = lambda f: lambda s: lambda i: \
+    isZero(i) \
+        (lambda _: s) \
+        (lambda _: f(tail(s))(pred(i))) \
+    (zero)
+
+suffix = lambda s: lambda i: ycomb(suffix_step)(s)(i)
+# Extract substring ala Python slice operator!
+#substr_step = lambda f: lambda s: lambda i: lambda j: \
+#    OR(geq(i)(strlen(s)))(OR(geq(j)(strlen(s)))(geq(j)(i))) \
+#        (lambda _: lambda x: lambda y: y) \ # return false??
+#        (lambda _: prefix(suffix(s)(i))(sub(j)(i))) \
+#    (zero)
+#
+#substr = lambda s: lambda i: lambda j: ycomb(substr_step)(s)(i)(j)
 #######################################################################
 # Binary Tree of Numbers
 #leaf = lambda n: lambda l: l
