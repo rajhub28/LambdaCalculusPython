@@ -14,7 +14,7 @@ Some String functions implemented are:
 - strlen
 - strcat
 - join
-- is_prefix
+- is_prefix, is_suffix
 - find substring in string, return index as signed number
 - extract prefix, suffix of strings at an index
 - extract substring given left and right indices

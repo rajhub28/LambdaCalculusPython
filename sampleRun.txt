@@ -181,5 +181,16 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 >>> s = encode_str("this is a string")
 >>> decode_str(substr(s)(church(2))(church(6)))
 'is is'
+>>> s1 = encode_str("Donald")
+>>> s2 = encode_str("Don")
+>>> displayBool(is_prefix(s1)(s2))
+'FALSE'
+>>> displayBool(is_prefix(s2)(s1))
+'TRUE'
+>>> s3 = encode_str("ald")
+>>> displayBool(is_suffix(s3)(s1))
+'TRUE'
+>>> displayBool(is_suffix(s1)(s3))
+'FALSE'
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 

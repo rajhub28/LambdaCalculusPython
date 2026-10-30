@@ -573,7 +573,7 @@ is_prefix_step = lambda f: lambda xs: lambda ys: \
 
 is_prefix = lambda xs: lambda ys: ycomb(is_prefix_step)(xs)(ys)
 
-# is_suffix
+is_suffix = lambda xs: lambda ys: is_prefix(reverse(xs))(reverse(ys))
 
 # Main recursive search function tracking current index `idx`
 #find_step = lambda f: lambda xs: lambda ys: lambda idx: \
