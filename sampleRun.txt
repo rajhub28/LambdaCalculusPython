@@ -192,5 +192,15 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 'TRUE'
 >>> displayBool(is_suffix(s1)(s3))
 'FALSE'
+>>> s1 = encode_str("ell")
+>>> s2 = encode_str("hello")
+>>> displayBool(contains(s1)(s2))
+'TRUE'
+>>> s1 = encode_str("hell")
+>>> displayBool(contains(s1)(s2))
+'TRUE'
+>>> s1 = encode_str("lo")
+>>> displayBool(contains(s1)(s2))
+'TRUE'
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 
