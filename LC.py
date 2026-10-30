@@ -185,6 +185,7 @@ subset_step = lambda f: lambda xs: lambda ys: \
 subset = lambda xs: lambda ys: ycomb(subset_step)(xs)(ys)
 equal  = lambda xs: lambda ys: AND(subset(xs)(ys))(subset(ys)(xs))
 ################# Y-COMBINATOR #############################
+# Factorial
 fact_step = lambda f: lambda n: \
     isZero(n) \
         (lambda _: one) \
@@ -193,6 +194,7 @@ fact_step = lambda f: lambda n: \
 
 fact = lambda n: ycomb(fact_step)(n)
 
+# Fibonacci nth
 fib_step = lambda f: lambda n: \
     isZero(pred(n)) \
         (lambda _: one) \
@@ -379,6 +381,7 @@ mapp = lambda g: lambda xs: ycomb(map_step)(g)(xs)
 # displayList(mapp(lambda x: poww(x)(church(2)))(mylist1))
 # displayList(mapp(lambda x: mult(church(2))(x))(mylist1))
 ##########################################################################################
+# foldr
 # foldr :: (a -> b -> b) -> b -> [a] -> b
 # foldr f z []     = z
 # foldr f z (x:xs) = f x (foldr f z xs)
@@ -390,6 +393,7 @@ foldr_step = lambda f: lambda g: lambda acc: lambda xs: \
 foldr = lambda g: lambda acc: lambda xs: ycomb(foldr_step)(g)(acc)(xs)
 # displayList(mylist# displayNum(foldr(add)(zero)(mylist1))
 ##########################################################################################
+# foldl
 # foldl :: (b -> a -> b) -> b -> [a] -> b
 # foldl f z []     = z
 # foldl f z (x:xs) = foldl f (f z x) xs
@@ -400,6 +404,7 @@ foldl_step = lambda f: lambda g: lambda acc: lambda xs: \
             
 foldl = lambda g: lambda acc: lambda xs: ycomb(foldl_step)(g)(acc)(xs)
 ##########################################################################################
+# given two sorted lists, xs and ys, determine if they are disjoint
 disjoint_step = lambda f: lambda xs: lambda ys: \
     isempty(xs)\
         (lambda _: true) \
@@ -418,7 +423,7 @@ disjoint = lambda xs: lambda ys: ycomb(disjoint_step)(xs)(ys)
 # displayBool(disjoint(mylist1)(mylist2))
 # displayBool(disjoint(mylist1)(mylist3))
 ##########################################################################################
-## union
+## union of sets
 union_step = lambda f: lambda xs: lambda ys: \
     isempty(xs) \
         (lambda _: ys) \
@@ -429,7 +434,7 @@ union_step = lambda f: lambda xs: lambda ys: \
     (zero)
 union = lambda xs: lambda ys: ycomb(union_step)(xs)(ys)
 ##########################################################################################
-## intersect
+## intersection of sets
 intersect_step = lambda f: lambda xs: lambda ys: \
     isempty(xs) \
         (lambda _: nil) \
@@ -440,7 +445,7 @@ intersect_step = lambda f: lambda xs: lambda ys: \
     (zero)
 intersect = lambda xs: lambda ys: ycomb(intersect_step)(xs)(ys)
 ##########################################################################################
-## intersect
+## difference of sets
 difference_step = lambda f: lambda xs: lambda ys: \
     isempty(xs) \
         (lambda _: nil) \
@@ -451,6 +456,7 @@ difference_step = lambda f: lambda xs: lambda ys: \
     (zero)
 difference = lambda xs: lambda ys: ycomb(difference_step)(xs)(ys)
 ##########################################################################################
+# Generate all subsets of a set
 bs = cons(one)(cons(two)(cons(three)(nil)))
 subsets_step = lambda f: lambda xs: \
     isempty(xs)\
@@ -465,6 +471,7 @@ subsets_step = lambda f: lambda xs: \
 subsets = lambda xs: ycomb(subsets_step)(xs)
 # displayListOfLists(subsets(bs))
 ##########################################################################################
+# determine if a list is ordered ascendingly
 ordered_step = lambda f: lambda xs: \
     isempty(xs)\
         (lambda _: true) \
@@ -537,6 +544,7 @@ displaySList = lambda xs: \
         (lambda _: []) \
         (lambda _: [decode_str(head(xs))] + displaySList(tail(xs))) \
     (zero)
+########################################################################
 
 strlen = lambda s: length(s)
 isempty_str = lambda s: eq(strlen(s))(zero)
@@ -555,9 +563,10 @@ join = lambda sep: lambda xss: ycomb(join_step)(sep)(xss)
 
 # sss = cons(encode_str("Donald"))(cons(encode_str("22-Sep-2000"))(cons(encode_str("10 Main Street"))(nil)))
 # decode_str(join(encode_str(":"))(sss))
-#
+ 
 # Let's implement find substring 
 #find = lambda xs: lambda ys: ycomb(find_step)(xs)(ys)
+
 # Helper: Checks if list/string xs is a prefix of ys
 is_prefix_step = lambda f: lambda xs: lambda ys: \
     isempty(xs) \
@@ -575,20 +584,8 @@ is_prefix = lambda xs: lambda ys: ycomb(is_prefix_step)(xs)(ys)
 
 is_suffix = lambda xs: lambda ys: is_prefix(reverse(xs))(reverse(ys))
 
-# Main recursive search function tracking current index `idx`
-#find_step = lambda f: lambda xs: lambda ys: lambda idx: \
-#    is_prefix(xs)(ys) \
-#        (lambda _: idx) \
-#        (isempty(ys) \
-#            (lambda _:  false) \
-#            (lambda _: f(xs)(tail(ys))(succ(idx))) \
-#        ) \
-#    (zero)
-
-# Public interface initializing index to zero
-#find = lambda xs: lambda ys: ycomb(find_step)(xs)(ys)(zero)
-
-# contains
+# contains/is_substring
+# ???
 
 minus_one = make_neg(one)
 
@@ -611,6 +608,7 @@ prefix_step = lambda f: lambda s: lambda i: \
     (zero)
 
 prefix = lambda s: lambda i: ycomb(prefix_step)(s)(i)
+
 # get suffix of string s starting at index i
 suffix_step = lambda f: lambda s: lambda i: \
     isZero(i) \
@@ -619,6 +617,7 @@ suffix_step = lambda f: lambda s: lambda i: \
     (zero)
 
 suffix = lambda s: lambda i: ycomb(suffix_step)(s)(i)
+
 # Extract substring ala Python slice operator!
 substr = lambda s: lambda i: lambda j: \
     OR(geq(i)(strlen(s)))(OR(geq(j)(strlen(s)))(lt(j)(i))) \
@@ -626,24 +625,3 @@ substr = lambda s: lambda i: lambda j: \
         (lambda _: prefix(suffix(s)(i))(sub(j)(i))) \
     (zero)
 #######################################################################
-# Binary Tree of Numbers
-#leaf = lambda n: lambda l: l
-#node = lambda v: lambda left: lambda right: \
-#    lambda n: lambda l: n(v)(left(n)(l))(right(n)(l))
-#
-## Construct subtrees
-#t_left  = node(two)(leaf)(leaf)
-#t_right = node(three)(leaf)(leaf)
-#
-## Root node holding 'one'
-#my_tree1 = node(one)(t_left)(t_right)
-#
-#tree1 = node(one)(leaf)(leaf)
-#tree2 = node(two)(tree1)(leaf)
-#tree5 = node(five)(leaf)(leaf)
-#my_tree2 = node(four)(tree2)(tree5)
-#
-#sum_tree = lambda t: t(lambda v: lambda l_sum: lambda r_sum: add(v)(add(l_sum)(r_sum)))(zero)
-#size_tree = lambda t: t(lambda v: lambda l_size: lambda r_size: add(one)(add(l_size)(r_size)))(zero)
-#
-###########################################################################################
