@@ -570,22 +570,19 @@ join = lambda sep: lambda xss: ycomb(join_step)(sep)(xss)
 # Helper: Checks if list/string xs is a prefix of ys
 is_prefix_step = lambda f: lambda xs: lambda ys: \
     isempty(xs) \
-    (lambda _: true) \
-    (isempty(ys) \
-        (lambda _: false) \
-        (eq(head(xs))(head(ys)) \
-            (lambda _: f(tail(xs))(tail(ys))) \
+        (lambda _: true) \
+        (isempty(ys) \
             (lambda _: false) \
+            (eq(head(xs))(head(ys)) \
+                (lambda _: f(tail(xs))(tail(ys))) \
+                (lambda _: false) \
+            ) \
         ) \
-    ) \
     (zero)
 
 is_prefix = lambda xs: lambda ys: ycomb(is_prefix_step)(xs)(ys)
 
 is_suffix = lambda xs: lambda ys: is_prefix(reverse(xs))(reverse(ys))
-
-# contains/is_substring
-# ???
 
 minus_one = make_neg(one)
 
@@ -599,6 +596,11 @@ find_step = lambda f: lambda xs: lambda ys: lambda idx: \
     (zero)
 
 find = lambda xs: lambda ys: ycomb(find_step)(xs)(ys)(zero)
+
+# contains/is_substring
+#contains = lambda xs: lambda ys: OR(is_prefix(xs)(ys))(is_prefix(xs)(tail(ys)))
+contains = lambda xs: lambda ys: NOT(is_neg(find(xs)(ys)))
+
 #######################################################################
 # get prefix of string s until index i
 prefix_step = lambda f: lambda s: lambda i: \
