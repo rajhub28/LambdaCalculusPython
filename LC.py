@@ -67,6 +67,18 @@ mod_step = lambda f: lambda m: lambda n: \
     (zero)
 
 mod = lambda m: lambda n: ycomb(mod_step)(m)(n)
+
+#is_factor = lambda m: lambda n: isZero(mod(n)(m))
+
+# Generates list [1, ..., n] recursively via Y-combinator
+range_1_to_n_step = lambda f: lambda current: lambda n: \
+    gt(current)(n) \
+        (lambda _: nil) \
+        (lambda _: cons(current)(f(succ(current))(n))) \
+    (zero)
+
+range_1_to_n = lambda n: ycomb(range_1_to_n_step)(one)(n)
+
 ########### Signed Numbers ################################
 # Signed Number Constructors
 make_pos = lambda n: pair(n)(zero)
@@ -487,6 +499,54 @@ ordered = lambda xs: ycomb(ordered_step)(xs)
 # displayBool(ordered(mylist1))
 # displayBool(ordered(mylist2))
 # displayBool(ordered(mylist3))
+##########################################################################################
+# Generates list [1, ..., n] recursively via Y-combinator
+#range_1_to_n_step = lambda f: lambda current: lambda n: \
+#    gt(current)(n) \
+#        (lambda _: nil) \
+#        (lambda _: cons(current)(f(succ(current))(n))) \
+#    (zero)
+#
+#range_1_to_n = lambda n: ycomb(range_1_to_n_step)(one)(n)
+
+# Factors function: filters [1, ..., n] for numbers that divide n
+#factors = lambda n: filterr(lambda m: isZero(mod(n)(m)))(range_1_to_n(n))
+# Predicate: returns true if d evenly divides n
+is_factor = lambda n: lambda d: isZero(mod(n)(d))
+
+# Generates list [1, ..., n] recursively via Y-combinator
+#range_1_to_n_step = lambda f: lambda current: lambda n: \
+#    gt(current)(n) \
+#    (lambda _: nil) \
+#    (lambda _: cons(current)(f(succ(current))(n))) \
+#    (zero)
+
+#range_1_to_n = lambda n: ycomb(range_1_to_n_step)(one)(n)
+
+# Factors function: filters [1, ..., n] for numbers that divide n
+#factors = lambda n: filterr(lambda d: eq(mod(n)(d))(zero))(range_1_to_n(n))
+#factors_step = lambda f: lambda n: lambda xs: \
+#    isempty(xs) \
+#        (lambda _: nil) \
+#        (eq(mod(n)(head(xs)))(zero) \
+#            (lambda _: cons(head(xs))(f(n)(tail(xs)))) \
+#            (lambda _: f(n)(tail(xs))) \
+#        ) \
+#    (zero)
+
+factors_step = lambda f: lambda n: lambda xs: \
+    isempty(xs) \
+        (lambda _: nil) \
+        (lambda _: \
+            eq(mod(n)(head(xs)))(zero) \
+                (lambda _: cons(head(xs))(f(n)(tail(xs)))) \
+                (lambda _: f(n)(tail(xs))) \
+            (zero) \
+        ) \
+    (zero)
+
+
+factors = lambda n: ycomb(factors_step)(n)(range_1_to_n(n))
 ##########################################################################################
 # Char data
 

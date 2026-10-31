@@ -23,6 +23,7 @@ Some numeric functions implemented are:
 
 - factorial of a number
 - fibonacci number
+- factors of a number
 
 Some list functions implemented are:
 
