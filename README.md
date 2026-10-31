@@ -24,6 +24,7 @@ Some numeric functions implemented are:
 - factorial of a number
 - fibonacci number
 - factors of a number
+- gcd of two numbers
 - is_prime
 
 Some list functions implemented are:
