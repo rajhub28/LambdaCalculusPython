@@ -222,5 +222,7 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 'TRUE'
 >>> displayBool(is_prime(church(29)))
 'TRUE'
+>>> displayNum(gcd(church(26))(church(65)))
+13
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 
