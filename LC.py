@@ -516,6 +516,15 @@ factors_step = lambda f: lambda n: lambda xs: \
 factors = lambda n: ycomb(factors_step)(n)(range_1_to_n(n))
 
 is_prime = lambda n: equal(factors(n))(cons(one)(cons(n)(nil)))
+
+gcd_step = lambda f: lambda a: lambda b: \
+    isZero(b) \
+        (lambda _: a) \
+        (lambda _: f(b)(mod(a)(b))) \
+    (zero)
+
+gcd = lambda a: lambda b: ycomb(gcd_step)(a)(b)
+
 ##########################################################################################
 # Char data
 
