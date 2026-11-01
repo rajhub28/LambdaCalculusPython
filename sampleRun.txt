@@ -224,5 +224,11 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 'TRUE'
 >>> displayNum(gcd(church(26))(church(65)))
 13
+>>> displayList(mylist1)
+[1, 2, 3, 4, 5]
+>>> displayList(mylist2)
+[4, 10, 3, 5, 9]
+>>> displayPairs(zipp(mylist1)(mylist2))
+[(1, 4), (2, 10), (3, 3), (4, 5), (5, 9)]
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 

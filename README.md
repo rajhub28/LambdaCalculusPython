@@ -39,6 +39,7 @@ Some list functions implemented are:
 - test if a list of numbers is ordered (sorted)
 - generate subsets of a list of numbers
 - union, intersect, difference of two lists of numbers
+- zip two lists
 
 Higher order functions: 
 

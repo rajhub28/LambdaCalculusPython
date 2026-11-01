@@ -416,6 +416,28 @@ foldl_step = lambda f: lambda g: lambda acc: lambda xs: \
             
 foldl = lambda g: lambda acc: lambda xs: ycomb(foldl_step)(g)(acc)(xs)
 ##########################################################################################
+zip_step = lambda f: lambda xs: lambda ys: \
+    OR(isempty(xs))(isempty(ys)) \
+        (lambda _: nil) \
+        (lambda _: cons(pair(head(xs))(head(ys)))(f(tail(xs))(tail(ys)))) \
+    (zero)
+
+zipp = lambda xs: lambda ys: ycomb(zip_step)(xs)(ys)
+
+## DISPLAY List of pairs of numbers
+#displayListOfPairs = lambda lp: ifthenelse(isempty(lp))\
+#    (lambda _: [])\
+#    (lambda _: [(displayNum(fst(head(lp))), displayNum(snd(head(lp))))] + displayListOfPairs(tail(lp)))
+#(zero)
+display_pairs_step = lambda f: lambda ps: \
+    isempty(ps) \
+        (lambda _: []) \
+        (lambda _: [(displayNum(fst(head(ps))), displayNum(snd(head(ps))))] + f(tail(ps))) \
+    (zero)
+
+displayPairs = lambda ps: ycomb(display_pairs_step)(ps)
+
+##########################################################################################
 # given two sorted lists, xs and ys, determine if they are disjoint
 disjoint_step = lambda f: lambda xs: lambda ys: \
     isempty(xs)\
