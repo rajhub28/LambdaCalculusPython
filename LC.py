@@ -687,3 +687,12 @@ substr = lambda s: lambda i: lambda j: \
         (lambda _: prefix(suffix(s)(i))(sub(j)(i))) \
     (zero)
 #######################################################################
+# Word Value A/a = 1, B/b = 2 ...
+word_value_step = lambda f: lambda ss: \
+    isempty(ss) \
+        (lambda _: zero) \
+        (lambda _: add(succ(sub(toLower(head(ss)))(encode_char('a'))))(f(tail(ss)))) \
+    (zero)
+
+wordValue = lambda xs: ycomb(word_value_step)(xs)
+#######################################################################

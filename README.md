@@ -18,6 +18,7 @@ Some String functions implemented are:
 - find substring in string, return index as signed number
 - extract prefix, suffix of strings at an index
 - extract substring given left and right indices
+- word value, A/a = 1, B/b = 2, ... sum values of letters in a word
 
 Some numeric functions implemented are:
 

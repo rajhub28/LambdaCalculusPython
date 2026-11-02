@@ -230,5 +230,9 @@ ASCSC1PP629W1:lambdaPy raj$ python3 -i LC.py
 [4, 10, 3, 5, 9]
 >>> displayPairs(zipp(mylist1)(mylist2))
 [(1, 4), (2, 10), (3, 3), (4, 5), (5, 9)]
+>>> displayNum(wordValue(encode_str("Attitude")))
+100
+>>> displayNum(wordValue(encode_str("Sunderraman")))
+128
 >>> exit()
 ASCSC1PP629W1:lambdaPy raj$ 
